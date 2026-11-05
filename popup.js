@@ -36,6 +36,7 @@ async function loadNotes() {
 function saveCurrentNote() {
   state.notes[state.selectedNote] = textarea.value;
   updateCharacterCount();
+  updateContentDots();
   chrome.storage.local.set({ notes: state.notes });
 }
 
@@ -57,6 +58,13 @@ function updateCharacterCount() {
   counter.textContent = count + (count === 1 ? ' character' : ' characters');
 }
 
+function updateContentDots() {
+  tabs.forEach(tab => {
+    const text = state.notes[tab.dataset.note] || '';
+    tab.classList.toggle('has-text', text.trim().length > 0);
+  });
+}
+
 function render() {
   const id = state.selectedNote;
 
@@ -70,6 +78,7 @@ function render() {
   });
 
   updateCharacterCount();
+  updateContentDots();
 }
 
 tabs.forEach(tab => {

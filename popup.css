@@ -81,11 +81,35 @@ body {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
 }
 
-.note-tab[data-note="yellow"] { background: var(--yellow); }
-.note-tab[data-note="purple"] { background: var(--purple); }
-.note-tab[data-note="orange"] { background: var(--orange); }
-.note-tab[data-note="green"]  { background: var(--green); }
-.note-tab[data-note="blue"]   { background: var(--blue); }
+.note-tab[data-note="yellow"] { background: var(--yellow); --dot: #C9A800; }
+.note-tab[data-note="purple"] { background: var(--purple); --dot: #8E5BD6; }
+.note-tab[data-note="orange"] { background: var(--orange); --dot: #D9782A; }
+.note-tab[data-note="green"]  { background: var(--green);  --dot: #5AA94A; }
+.note-tab[data-note="blue"]   { background: var(--blue);   --dot: #4A8AD4; }
+
+/* Dot shown when a note has content */
+.note-tab {
+  position: relative;
+}
+
+.note-tab::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dot);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.note-tab.has-text::after {
+  opacity: 1;
+  transform: scale(1);
+}
 
 /* Text area */
 .note-area {
