@@ -1,0 +1,334 @@
+Prompt: Build a Sticky Notes Browser Extension (Microsoft Edge / Chrome)
+
+Build a complete Microsoft Edge / Google Chrome browser extension using Manifest V3 called Sticky Notes.
+
+Generate all files required for a working extension:
+
+manifest.json
+popup.html
+popup.css
+popup.js
+
+The extension must run entirely locally and must not require:
+
+Any backend
+Any database
+Any API
+Any internet connection
+Any external libraries
+
+Use only vanilla HTML, CSS and JavaScript.
+
+Purpose
+
+The extension acts as a digital sticky notes application.
+
+The user has 5 independent colour-coded sticky notes.
+
+Each note is selected by clicking a coloured square at the top of the popup.
+
+Each note has its own content.
+
+Switching between notes should instantly switch the text displayed in the textarea.
+
+User Interface
+
+The popup should have a clean modern layout.
+
+Example:
+
+Plain Text
+┌───────────────────────────────┐
+│ ■ ■ ■ ■ ■ │
+├───────────────────────────────┤
+│ │
+│ Write something... │
+│ │
+│ │
+│ │
+├───────────────────────────────┤
+│ 123 characters │
+└───────────────────────────────┘
+Colour Tabs
+
+Display 5 clickable squares at the top.
+
+Use pastel colours.
+
+Note 1
+CSS
+#FFF4A3
+
+Pastel Yellow
+
+Note 2
+CSS
+#E6D5FF
+
+Pastel Purple
+
+Note 3
+CSS
+#FFD8AE
+
+Pastel Orange
+
+Note 4
+CSS
+#D8F5D1
+
+Pastel Green
+
+Note 5
+CSS
+#D7EBFF
+
+Pastel Blue
+
+Each square should:
+
+be clickable
+switch to that note
+load that note's content
+change the textarea colour to match
+Active Note Highlighting
+
+The currently selected note should be visually obvious.
+
+Requirements:
+
+slightly larger than other tabs
+dark border
+subtle shadow
+smooth animation
+
+Example CSS:
+
+CSS
+.note-tab.active {
+transform: scale(1.15);
+border: 3px solid #444;
+box-shadow: 0 0 8px rgba(0,0,0,.25);
+}
+Text Area
+
+Provide a large multiline textarea.
+
+Requirements:
+
+fills most of the popup
+user can type normally
+background colour matches the selected note
+dark readable text
+
+Placeholder:
+
+Plain Text
+Write something...
+Automatic Saving
+
+No Save button.
+
+Use autosave.
+
+Every change made to the textarea must save immediately.
+
+Example:
+
+JavaScript
+textarea.addEventListener('input', saveCurrentNote);
+ 
+
+The user should never need to manually save.
+
+Persistence
+
+Store everything using:
+
+JavaScript
+chrome.storage.local
+
+Do NOT use:
+
+JavaScript
+localStorage
+
+Create a storage structure similar to:
+
+JavaScript
+{
+selectedNote: "yellow",
+ 
+notes: {
+yellow: "",
+purple: "",
+orange: "",
+green: "",
+blue: ""
+}
+}
+
+Data must persist across:
+
+Closing the popup
+Closing Edge
+Rebooting Windows
+Browser updates
+Remember Last Opened Note
+
+This feature is required.
+
+If the currently selected tab is:
+
+Plain Text
+Purple
+ 
+
+then:
+
+Plain Text
+Close browser
+Reopen browser
+Open extension
+
+The Purple note should automatically load.
+
+Store the selected note in:
+
+JavaScript
+chrome.storage.local
+
+Restore it when the popup opens.
+
+Character Count
+
+Display a live character count at the bottom of the popup.
+
+Examples:
+
+Plain Text
+0 characters
+Plain Text
+25 characters
+Plain Text
+431 characters
+
+Update instantly while typing.
+
+Example:
+
+JavaScript
+counter.textContent =
+textarea.value.length + ' characters';
+Dark Mode
+
+Support light mode and dark mode.
+
+Use:
+
+CSS
+@media (prefers-color-scheme: dark)
+ 
+
+Requirements:
+
+Extension frame follows browser theme.
+Pastel note colours remain unchanged.
+Text remains readable in both modes.
+Styling
+
+Use a modern appearance:
+
+Segoe UI font
+Rounded corners
+Soft shadows
+Smooth transitions
+Comfortable spacing
+
+Popup width:
+
+CSS
+400px
+
+or similar.
+
+Text area height:
+
+CSS
+300px
+
+or similar.
+
+Manifest Requirements
+
+Use Manifest V3.
+
+Include:
+
+JSON
+"permissions": [
+"storage"
+]
+
+The popup should be opened from the extension icon.
+
+JavaScript Requirements
+
+Create functions similar to:
+
+JavaScript
+loadNotes()
+saveCurrentNote()
+switchNote(noteId)
+updateCharacterCount()
+Expected Behaviour
+
+Example:
+
+User clicks Yellow.
+Types:
+Plain Text
+Buy milk
+Book dentist
+User clicks Purple.
+Types:
+Plain Text
+Extension ideas
+ 
+User clicks Yellow again.
+
+Result:
+
+Plain Text
+Buy milk
+Book dentist
+
+still appears.
+
+User closes Edge.
+User reopens Edge.
+User opens extension.
+
+Result:
+
+Purple note opens automatically if it was the last selected note.
+All note content remains intact.
+Deliverables
+
+Return complete source code for:
+
+manifest.json
+popup.html
+popup.css
+popup.js
+
+Provide production-ready code, not pseudocode.
+
+The extension should be installable immediately through:
+
+Plain Text
+edge://extensions
+→ Developer Mode
+→ Load Unpacked
+
+and work without modification.
