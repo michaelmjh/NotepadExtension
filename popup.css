@@ -1,0 +1,122 @@
+:root {
+  --yellow: #FFF4A3;
+  --purple: #E6D5FF;
+  --orange: #FFD8AE;
+  --green:  #D8F5D1;
+  --blue:   #D7EBFF;
+
+  --frame-bg: #f4f4f6;
+  --frame-text: #555;
+  --divider: rgba(0, 0, 0, 0.08);
+  --active-border: #444;
+  --note-text: #2b2b2b;
+  --placeholder: rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --frame-bg: #202124;
+    --frame-text: #bdbdbd;
+    --divider: rgba(255, 255, 255, 0.1);
+    --active-border: #f1f1f1;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 400px;
+  background: var(--frame-bg);
+  color: var(--frame-text);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  transition: background-color 0.2s ease;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 12px;
+}
+
+/* Colour tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 6px 0 12px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.note-tab {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.note-tab:hover {
+  transform: scale(1.07);
+}
+
+.note-tab:focus-visible {
+  outline: 2px solid var(--active-border);
+  outline-offset: 2px;
+}
+
+.note-tab.active {
+  transform: scale(1.15);
+  border: 3px solid var(--active-border);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+}
+
+.note-tab[data-note="yellow"] { background: var(--yellow); }
+.note-tab[data-note="purple"] { background: var(--purple); }
+.note-tab[data-note="orange"] { background: var(--orange); }
+.note-tab[data-note="green"]  { background: var(--green); }
+.note-tab[data-note="blue"]   { background: var(--blue); }
+
+/* Text area */
+.note-area {
+  width: 100%;
+  height: 300px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  resize: none;
+  background: var(--yellow);
+  color: var(--note-text);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: background-color 0.25s ease;
+}
+
+.note-area:focus {
+  outline: none;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
+}
+
+.note-area::placeholder {
+  color: var(--placeholder);
+}
+
+/* Footer */
+.footer {
+  padding-top: 10px;
+  border-top: 1px solid var(--divider);
+  font-size: 12px;
+  text-align: right;
+}

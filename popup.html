@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Notes</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="app">
+    <nav class="tabs" role="tablist" aria-label="Notes">
+      <button class="note-tab" data-note="yellow" role="tab" aria-label="Yellow note" title="Yellow"></button>
+      <button class="note-tab" data-note="purple" role="tab" aria-label="Purple note" title="Purple"></button>
+      <button class="note-tab" data-note="orange" role="tab" aria-label="Orange note" title="Orange"></button>
+      <button class="note-tab" data-note="green" role="tab" aria-label="Green note" title="Green"></button>
+      <button class="note-tab" data-note="blue" role="tab" aria-label="Blue note" title="Blue"></button>
+    </nav>
+
+    <textarea id="note" class="note-area" placeholder="Write something..." spellcheck="true" aria-label="Note content"></textarea>
+
+    <footer class="footer">
+      <span id="counter">0 characters</span>
+    </footer>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
