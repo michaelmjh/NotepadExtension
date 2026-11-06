@@ -87,4 +87,23 @@ tabs.forEach(tab => {
 
 textarea.addEventListener('input', saveCurrentNote);
 
+// Notes edited elsewhere (Duck Dashboard new tab) appear here straight away.
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== 'local' || !changes.notes) return;
+  const incoming = { ...DEFAULT_STATE.notes, ...(changes.notes.newValue || {}) };
+  const id = state.selectedNote;
+  const currentChanged = incoming[id] !== textarea.value;
+  state.notes = incoming;
+
+  if (currentChanged) {
+    // Keep the caret roughly where it was.
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    textarea.value = incoming[id];
+    textarea.setSelectionRange(Math.min(start, textarea.value.length), Math.min(end, textarea.value.length));
+    updateCharacterCount();
+  }
+  updateContentDots();
+});
+
 loadNotes();
