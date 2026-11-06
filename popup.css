@@ -1,3 +1,9 @@
+/* Sticky Notes - popup styles
+   Dark navy and violet look shared with Duck Hero Generator Pro: rounded dark
+   panels, a pill-shaped tab bar and violet highlights. The notes themselves
+   keep their five pastel colours. Dark is the default theme. Light theme via
+   prefers-color-scheme. */
+
 :root {
   --yellow: #FFF4A3;
   --purple: #E6D5FF;
@@ -5,20 +11,44 @@
   --green:  #D8F5D1;
   --blue:   #D7EBFF;
 
-  --frame-bg: #f4f4f6;
-  --frame-text: #555;
-  --divider: rgba(0, 0, 0, 0.08);
-  --active-border: #444;
+  --page-top: #3b3853;
+  --page-bottom: #2b2940;
+  --panel: #1e1c2f;
+  --panel-border: rgba(255, 255, 255, 0.06);
+  --track: #171626;
+  --text: #f3f1ff;
+  --muted: #a9a6c6;
+
+  --accent-from: #5f3df0;
+  --accent-to: #8a4cf2;
+  --focus: #b9a6ff;
+  --active-ring: #f3f1ff;
+
   --note-text: #2b2b2b;
   --placeholder: rgba(0, 0, 0, 0.4);
+
+  --shadow: 0 6px 18px rgba(8, 6, 24, 0.45);
+  --glow: 0 4px 14px rgba(110, 66, 240, 0.45);
+
+  --control-size: 40px;
+  --radius-panel: 22px;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --frame-bg: #202124;
-    --frame-text: #bdbdbd;
-    --divider: rgba(255, 255, 255, 0.1);
-    --active-border: #f1f1f1;
+    --page-top: #ebe8f8;
+    --page-bottom: #dcd8f0;
+    --panel: #ffffff;
+    --panel-border: rgba(40, 30, 90, 0.08);
+    --track: #ece9f9;
+    --text: #272342;
+    --muted: #6b6788;
+
+    --focus: #5f3df0;
+    --active-ring: #272342;
+
+    --shadow: 0 6px 16px rgba(60, 40, 140, 0.14);
+    --glow: 0 4px 12px rgba(110, 66, 240, 0.35);
   }
 }
 
@@ -33,10 +63,9 @@ html, body {
 
 body {
   width: 400px;
-  background: var(--frame-bg);
-  color: var(--frame-text);
+  background: linear-gradient(180deg, var(--page-top), var(--page-bottom));
+  color: var(--muted);
   font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  transition: background-color 0.2s ease;
 }
 
 .app {
@@ -46,23 +75,26 @@ body {
   gap: 12px;
 }
 
-/* Colour tabs */
+/* Colour tabs: a dark pill panel holding five same-size swatches */
 .tabs {
   display: flex;
   justify-content: center;
   gap: 14px;
-  padding: 6px 0 12px;
-  border-bottom: 1px solid var(--divider);
+  padding: 10px 16px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
 }
 
 .note-tab {
-  width: 32px;
-  height: 32px;
+  position: relative;
+  width: var(--control-size);
+  height: var(--control-size);
   padding: 0;
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
@@ -71,14 +103,14 @@ body {
 }
 
 .note-tab:focus-visible {
-  outline: 2px solid var(--active-border);
-  outline-offset: 2px;
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 
 .note-tab.active {
-  transform: scale(1.15);
-  border: 3px solid var(--active-border);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  transform: scale(1.1);
+  border-color: var(--active-ring);
+  box-shadow: 0 0 0 3px var(--accent-from), var(--glow);
 }
 
 .note-tab[data-note="yellow"] { background: var(--yellow); --dot: #C9A800; }
@@ -88,17 +120,13 @@ body {
 .note-tab[data-note="blue"]   { background: var(--blue);   --dot: #4A8AD4; }
 
 /* Dot shown when a note has content */
-.note-tab {
-  position: relative;
-}
-
 .note-tab::after {
   content: "";
   position: absolute;
-  right: 3px;
-  bottom: 3px;
-  width: 7px;
-  height: 7px;
+  right: 4px;
+  bottom: 4px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--dot);
   opacity: 0;
@@ -111,26 +139,27 @@ body {
   transform: scale(1);
 }
 
-/* Text area */
+/* Text area: a rounded note. The colour is set per note by popup.js. */
 .note-area {
+  display: block;
   width: 100%;
   height: 300px;
-  padding: 14px;
+  padding: 14px 16px;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-panel);
   resize: none;
   background: var(--yellow);
   color: var(--note-text);
   font-family: inherit;
   font-size: 14px;
   line-height: 1.5;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-  transition: background-color 0.25s ease;
+  box-shadow: var(--shadow);
+  transition: background-color 0.25s ease, box-shadow 0.18s ease;
 }
 
 .note-area:focus {
   outline: none;
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow), 0 0 0 2px rgba(138, 76, 242, 0.55);
 }
 
 .note-area::placeholder {
@@ -139,8 +168,12 @@ body {
 
 /* Footer */
 .footer {
-  padding-top: 10px;
-  border-top: 1px solid var(--divider);
   font-size: 12px;
-  text-align: right;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
